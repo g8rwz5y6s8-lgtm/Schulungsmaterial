@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!doctype html>
 <html lang="de">
 <head>
@@ -114,6 +115,31 @@
         </p>
 
         <div class="sheet-card">
+
+          <!-- ✅ Auto-Check Aufgabenblock -->
+          <div class="card">
+            <h2>Übungsaufgaben (Auto-Prüfung)</h2>
+            <p class="muted small">
+              Erledige die Aufgaben in der Tabelle und klicke dann auf <b>„Aufgaben prüfen“</b>.
+              Jede Aufgabe gibt nur <b>einmal</b> Punkte.
+            </p>
+
+            <ol class="bullets" style="margin-top:10px;">
+              <li><b>Zeile/ID 3:</b> Setze <b>Status Quo</b> auf <b>„Nicht vorhanden“</b> (Zelle muss rot werden).</li>
+              <li><b>Zeile/ID 1:</b> Wähle Abteilung <b>„Product Management“</b> → Verantwortlichkeit muss automatisch <b>Thomas</b> sein.</li>
+              <li><b>Last Check:</b> Trage bei <b>mindestens 2 Einträgen</b> ein Datum ein (z.B. Windows: <b>Strg + Punkt</b>).</li>
+              <li><b>Zeile/ID 6:</b> Setze <b>Zyklus</b> auf <b>„Quartalsweise“</b> (Zelle wird gelb).</li>
+            </ol>
+
+            <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+              <button class="btn" id="checkTasksBtn">Aufgaben prüfen</button>
+              <div class="muted small" id="tasksPointsInfo"></div>
+            </div>
+
+            <div class="quiz-result" id="tasksResult"></div>
+          </div>
+          <!-- ✅ Ende Aufgabenblock -->
+
           <div class="sheet-toolbar">
             <div class="tool">
               <div class="tool-label">Filter (Spalte)</div>
