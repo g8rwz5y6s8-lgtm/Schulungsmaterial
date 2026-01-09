@@ -1,18 +1,19 @@
-<!-- index.html -->
 <!doctype html>
 <html lang="de">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rechtskataster Datenschutz & IT – E-Learning</title>
+  <title>LegalTegrity – E-Learning</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="brand">
-      <div class="logo">RK</div>
+      <div class="logo-wrap">
+        <img src="legaltegrity-logo.png" class="brand-logo" alt="LegalTegrity" />
+      </div>
       <div>
-        <div class="title">Rechtskataster Datenschutz & IT</div>
+        <div class="title">LegalTegrity</div>
         <div class="subtitle">E-Learning (Uni-Projekt-Prototyp)</div>
       </div>
     </div>
@@ -32,11 +33,11 @@
     <aside class="sidebar">
       <div class="side-title">Module</div>
       <div class="navlist">
-        <button class="navbtn modulebtn active" data-module="m1">Modul 1: Überblick</button>
-        <button class="navbtn modulebtn" data-module="m2">Modul 2: Excel-Basics</button>
-        <button class="navbtn modulebtn" data-module="m3">Modul 3: GAP & Risiko</button>
-        <button class="navbtn modulebtn" data-module="m4">Modul 4: Verantwortliche</button>
-        <button class="navbtn modulebtn" data-module="m5">Modul 5: Audit-Ready</button>
+        <button class="navbtn modulebtn active" data-module="m1">Modul 1: Grundverständnis</button>
+        <button class="navbtn modulebtn" data-module="m2">Modul 2: Struktur & Interpretation</button>
+        <button class="navbtn modulebtn" data-module="m3">Modul 3: Pflege & Aktualisierung</button>
+        <button class="navbtn modulebtn" data-module="m4">Modul 4: Navigation & Nutzung</button>
+        <button class="navbtn modulebtn" data-module="m5">Modul 5: Governance & Rollen</button>
         <button class="navbtn modulebtn" data-module="challenge">Challenge</button>
       </div>
 
@@ -52,13 +53,13 @@
     <main class="content">
       <!-- QUIZ VIEW -->
       <section class="view active" id="view-quiz">
-        <h1 id="moduleTitle">Modul 1 – Überblick</h1>
+        <h1 id="moduleTitle">Modul 1 – Grundverständnis</h1>
         <p class="muted" id="moduleDesc"></p>
 
         <div class="card">
           <div class="qhead">
             <div class="qtitle" id="qTitle">Frage</div>
-            <div class="qmeta muted" id="qMeta">Multiple Choice – wähle eine Antwort.</div>
+            <div class="qmeta muted" id="qMeta">Wähle die richtige(n) Antwort(en).</div>
           </div>
 
           <h2 id="qQuestion">…</h2>
@@ -89,7 +90,7 @@
       <section class="view" id="view-challenge">
         <h1>Challenge – Audit Ready</h1>
         <p class="muted">
-          Ziel: In kurzer Zeit die kritischen Stellen identifizieren und Pflege-Standards anwenden.
+          Ziel: In kurzer Zeit kritische Stellen identifizieren und Pflege-Standards anwenden.
         </p>
 
         <div class="card">
@@ -160,7 +161,7 @@
           </div>
 
           <div class="muted small" style="margin-top:10px;">
-            Hinweis: <b>Verantwortlichkeit</b> ist gesperrt (Auto-Zuordnung) – genau wie „Formel/Automatik“ in Excel.
+            Hinweis: <b>Verantwortlichkeit</b> ist gesperrt (Auto-Zuordnung) – wie „Formel/Automatik“ in Excel.
           </div>
         </div>
       </section>
