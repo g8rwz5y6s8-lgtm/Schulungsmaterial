@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rechtskataster E-Learning</title>
+  <title>Rechtskataster Datenschutz & IT – E-Learning</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -28,202 +28,113 @@
   </header>
 
   <div class="layout">
-    <nav class="sidebar">
-      <button class="navbtn active" data-view="m1">Modul 1: Überblick</button>
-      <button class="navbtn" data-view="m2">Modul 2: Excel-Basics</button>
-      <button class="navbtn" data-view="m3">Modul 3: GAP & Risiko</button>
-      <button class="navbtn" data-view="m4">Modul 4: Verantwortliche</button>
-      <button class="navbtn" data-view="m5">Modul 5: Audit-Ready</button>
-      <button class="navbtn" data-view="challenge">Challenge</button>
-      <hr />
-      <button class="navbtn" data-view="sheet">Übungs-Sheet</button>
+    <aside class="sidebar">
+      <div class="side-title">Module</div>
+      <div class="navlist">
+        <button class="navbtn modulebtn active" data-module="m1">Modul 1: Überblick</button>
+        <button class="navbtn modulebtn" data-module="m2">Modul 2: Excel-Basics</button>
+        <button class="navbtn modulebtn" data-module="m3">Modul 3: GAP & Risiko</button>
+        <button class="navbtn modulebtn" data-module="m4">Modul 4: Verantwortliche</button>
+        <button class="navbtn modulebtn" data-module="m5">Modul 5: Audit-Ready</button>
+        <button class="navbtn modulebtn" data-module="challenge">Challenge</button>
+      </div>
+
+      <div class="side-title">Fragen im Modul</div>
+      <div id="questionNav" class="navlist"></div>
+
+      <div class="side-title">Praxis</div>
+      <button class="navbtn" id="navSheet">Übungs-Sheet</button>
+
       <button class="navbtn danger" id="resetBtn">Reset</button>
-    </nav>
+    </aside>
 
     <main class="content">
-      <!-- Modul 1 -->
-      <section class="view active" id="view-m1">
-        <h1>Modul 1 – Zweck & Aufbau des Rechtskatasters</h1>
-        <p>
-          Ziel: Du verstehst, wozu das Rechtskataster dient und wie die Spalten zusammenhängen
-          (Prozess, Rechtsgebiet, Artikel, Status Quo, GAP Analyse, Verantwortlichkeit, Zyklus).
-        </p>
+      <!-- QUIZ VIEW -->
+      <section class="view active" id="view-quiz">
+        <h1 id="moduleTitle">Modul 1 – Überblick</h1>
+        <p class="muted" id="moduleDesc"></p>
 
         <div class="card">
-          <h2>Mini-Check (2 Punkte)</h2>
-          <p>Welche Spalte zeigt am ehesten, wo Handlungsbedarf besteht?</p>
-          <div class="quiz" data-quiz-id="q1" data-points="2">
-            <label><input type="radio" name="q1" value="a"> Status Quo</label>
-            <label><input type="radio" name="q1" value="b"> GAP Analyse</label>
-            <label><input type="radio" name="q1" value="c"> Paragraph / Artikel</label>
-            <button class="btn" data-submit-quiz="q1">Antwort prüfen</button>
-            <div class="quiz-result" id="q1-result"></div>
+          <div class="qhead">
+            <div class="qtitle" id="qTitle">Frage</div>
+            <div class="qmeta muted" id="qMeta">Multiple Choice – wähle eine Antwort.</div>
           </div>
-        </div>
 
-        <div class="card">
-          <h2>Übung</h2>
-          <ol>
-            <li>Wechsle zu <b>Übungs-Sheet</b>.</li>
-            <li>Filtere später (in Modul 3) nach Einträgen mit gefüllter <b>GAP Analyse</b>.</li>
-          </ol>
-        </div>
-      </section>
+          <h2 id="qQuestion">…</h2>
 
-      <!-- Modul 2 -->
-      <section class="view" id="view-m2">
-        <h1>Modul 2 – Excel-Basics am Rechtskataster</h1>
-        <p>Hier übst du Sortieren, Filtern und Kopfzeile “fixieren” (im Sheet simuliert).</p>
+          <div class="quiz" id="qOptions"></div>
 
-        <div class="card">
-          <h2>Quiz (3 Punkte)</h2>
-          <p>Warum ist Filtern im Rechtskataster besonders hilfreich?</p>
-          <div class="quiz" data-quiz-id="q2" data-points="3">
-            <label><input type="radio" name="q2" value="a"> Für schöneres Layout</label>
-            <label><input type="radio" name="q2" value="b"> Um relevante Einträge schnell zu finden</label>
-            <label><input type="radio" name="q2" value="c"> Damit Excel schneller startet</label>
-            <button class="btn" data-submit-quiz="q2">Antwort prüfen</button>
-            <div class="quiz-result" id="q2-result"></div>
+          <div class="quiz-actions">
+            <button class="btn" id="checkBtn">Antwort prüfen</button>
+            <button class="btn ghost" id="nextBtn">Nächste Frage</button>
           </div>
+
+          <div class="quiz-result" id="qResult"></div>
         </div>
 
         <div class="card">
-          <h2>Praxisaufgabe (im Übungs-Sheet)</h2>
-          <ul>
-            <li>Sortiere nach <b>Last Check</b> (älteste zuerst)</li>
-            <li>Filter: <b>Rechtsgebiet = DSGVO</b></li>
-          </ul>
-          <p class="hint">Tipp: In dieser Demo nutzt du die Filter-Box oberhalb der Tabelle.</p>
-        </div>
-      </section>
-
-      <!-- Modul 3 -->
-      <section class="view" id="view-m3">
-        <h1>Modul 3 – GAP Analyse & Risiko</h1>
-        <p>Du lernst: offene Punkte erkennen und priorisieren (z. B. “Last Check” zu alt + GAP vorhanden).</p>
-
-        <div class="card">
-          <h2>Quiz (4 Punkte)</h2>
-          <p>Ein Eintrag mit ausgefüllter GAP Analyse bedeutet meist:</p>
-          <div class="quiz" data-quiz-id="q3" data-points="4">
-            <label><input type="radio" name="q3" value="a"> Alles ist vollständig umgesetzt</label>
-            <label><input type="radio" name="q3" value="b"> Es gibt (potenziellen) Handlungsbedarf</label>
-            <label><input type="radio" name="q3" value="c"> Der Eintrag ist archiviert</label>
-            <button class="btn" data-submit-quiz="q3">Antwort prüfen</button>
-            <div class="quiz-result" id="q3-result"></div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Praxisaufgabe (im Übungs-Sheet)</h2>
-          <ul>
-            <li>Filtere nach <b>GAP Analyse enthält Text</b></li>
-            <li>Markiere kritische Zeilen (in dieser Demo: “Highlight”-Schalter)</li>
+          <h2>Wichtige Regeln aus dem Rechtskataster</h2>
+          <ul class="bullets">
+            <li><b>Abteilung</b> (Dropdown) → <b>Verantwortlichkeit</b> wird automatisch gesetzt (nicht editierbar).</li>
+            <li><b>Status Quo</b> (Dropdown) mit Ampellogik: <b>Implementiert (grün)</b>, <b>In Bearbeitung (gelb)</b>, <b>Nicht vorhanden (rot)</b>.</li>
+            <li><b>Last Check</b>: aktuelles Datum unter Windows per <b>Strg + Punkt</b>.</li>
+            <li><b>Zyklus</b> (Dropdown): Jährlich/Halbjährlich neutral, <b>Quartalsweise gelb</b>, <b>Monatlich rot</b>.</li>
+            <li><b>ID</b> ist fortlaufend für eindeutige Referenzen (z.B. E-Mail, Filter).</li>
           </ul>
         </div>
       </section>
 
-      <!-- Modul 4 -->
-      <section class="view" id="view-m4">
-        <h1>Modul 4 – Verantwortlichkeit & Maßnahmen</h1>
-        <p>Ownership + Dokumentation sind Audit-Kernpunkte.</p>
-
-        <div class="card">
-          <h2>Quiz (3 Punkte)</h2>
-          <p>Warum ist eine klare Verantwortlichkeit wichtig?</p>
-          <div class="quiz" data-quiz-id="q4" data-points="3">
-            <label><input type="radio" name="q4" value="a"> Für Excel-Formeln</label>
-            <label><input type="radio" name="q4" value="b"> Für Nachvollziehbarkeit im Audit</label>
-            <label><input type="radio" name="q4" value="c"> Damit Filter besser aussehen</label>
-            <button class="btn" data-submit-quiz="q4">Antwort prüfen</button>
-            <div class="quiz-result" id="q4-result"></div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Praxis (im Übungs-Sheet)</h2>
-          <p>Trage in 2 Zeilen eine <b>Verantwortlichkeit</b> ein und ergänze eine kurze <b>Dokumentation</b>.</p>
-        </div>
-      </section>
-
-      <!-- Modul 5 -->
-      <section class="view" id="view-m5">
-        <h1>Modul 5 – Audit-Ready Pflege</h1>
-        <p>Du erkennst Lücken (fehlende Felder), Dubletten und “Last Check”-Probleme.</p>
-
-        <div class="card">
-          <h2>Quiz (4 Punkte)</h2>
-          <p>Wann gilt ein Rechtskataster als auditfähig?</p>
-          <div class="quiz" data-quiz-id="q5" data-points="4">
-            <label><input type="radio" name="q5" value="a"> Wenn es schön formatiert ist</label>
-            <label><input type="radio" name="q5" value="b"> Wenn es aktuell, nachvollziehbar und gepflegt ist</label>
-            <label><input type="radio" name="q5" value="c"> Wenn es sehr viele Einträge hat</label>
-            <button class="btn" data-submit-quiz="q5">Antwort prüfen</button>
-            <div class="quiz-result" id="q5-result"></div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Praxis (im Übungs-Sheet)</h2>
-          <ul>
-            <li>Filter: Zeige Einträge ohne <b>Verantwortlichkeit</b></li>
-            <li>Filter: Zeige Einträge mit <b>Last Check</b> leer</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Challenge -->
+      <!-- CHALLENGE VIEW -->
       <section class="view" id="view-challenge">
-        <h1>Audit-Ready Challenge 🏁</h1>
-        <p><b>Szenario:</b> In 10 Minuten sollst du Art. 30/32/33 relevante Einträge prüfen.</p>
-
-        <div class="card">
-          <h2>Aufgaben (max. 10 Punkte)</h2>
-          <ol>
-            <li>Filtere nach <b>Paragraph/Artikel</b> enthält <code>Art. 32</code></li>
-            <li>Finde alle Zeilen mit gefüllter <b>GAP Analyse</b></li>
-            <li>Ergänze bei 1 Zeile eine <b>Verantwortlichkeit</b></li>
-            <li>Setze <b>Last Check</b> auf ein Datum</li>
-          </ol>
-          <button class="btn" id="challengeCompleteBtn">Challenge als erledigt markieren</button>
-          <div class="quiz-result" id="challenge-result"></div>
-        </div>
-      </section>
-
-      <!-- Übungs-Sheet -->
-      <section class="view" id="view-sheet">
-        <h1>Übungs-Sheet (Excel-ähnlich)</h1>
-        <p class="hint">
-          Du kannst Zellen direkt bearbeiten. Formeln starten mit <code>=</code> (z. B. <code>=SUM(H2:H6)</code>).
-          Diese Demo unterstützt <b>SUM</b> und einfache Referenzen (A1, B2, …).
+        <h1>Challenge – Audit Ready</h1>
+        <p class="muted">
+          Ziel: In kurzer Zeit die kritischen Stellen identifizieren und Pflege-Standards anwenden.
         </p>
 
         <div class="card">
-          <div class="sheet-controls">
-            <div class="control">
-              <label>Filter (Spalte)</label>
+          <h2>Aufgaben</h2>
+          <ol class="bullets">
+            <li>Öffne das <b>Übungs-Sheet</b>.</li>
+            <li>Setze in 2 Zeilen den <b>Status Quo</b> auf <b>„Nicht vorhanden“</b> und prüfe, ob die Zellen rot werden.</li>
+            <li>Wähle in einer Zeile <b>„Product Management“</b> und prüfe, ob <b>Thomas</b> automatisch bei Verantwortlichkeit steht.</li>
+            <li>Trage in 2 Zeilen ein Datum in <b>Last Check</b> ein (z.B. via <b>Strg + Punkt</b>).</li>
+          </ol>
+
+          <button class="btn" id="challengeCompleteBtn">Challenge als erledigt markieren</button>
+          <div class="quiz-result" id="challengeResult"></div>
+        </div>
+      </section>
+
+      <!-- SHEET VIEW -->
+      <section class="view" id="view-sheet">
+        <h1>Übungs-Sheet (Excel-Look)</h1>
+        <p class="muted">
+          Diese Tabelle simuliert den Aufbau des Rechtskatasters (Excel-Optik) inkl. Dropdowns, Ampelfarben
+          und automatischer Verantwortlichkeit.
+        </p>
+
+        <div class="sheet-card">
+          <div class="sheet-toolbar">
+            <div class="tool">
+              <div class="tool-label">Filter (Spalte)</div>
               <select id="filterCol"></select>
             </div>
-            <div class="control">
-              <label>Filter (enthält)</label>
-              <input id="filterVal" type="text" placeholder="z.B. DSGVO oder Art. 32" />
+            <div class="tool">
+              <div class="tool-label">Filter (enthält)</div>
+              <input id="filterVal" type="text" placeholder="z.B. Implementiert, DSGVO, Quartalsweise…" />
             </div>
-            <div class="control">
-              <label>Highlight GAP</label>
-              <button class="btn" id="highlightGapBtn">Toggle</button>
-            </div>
-            <div class="control">
-              <label>Neuberechnen</label>
-              <button class="btn" id="recalcBtn">Formeln berechnen</button>
+            <div class="tool">
+              <div class="tool-label">Zurück</div>
+              <button class="btn" id="backToQuizBtn">Zum Quiz</button>
             </div>
           </div>
 
-          <div class="tablewrap">
-            <table id="sheetTable"></table>
+          <div class="tablewrap light">
+            <table id="sheetTable" class="excel"></table>
           </div>
 
-          <div class="hint">
-            Tipp: Nutze die Filter-Boxen oben, um “Excel-Filter” zu simulieren.
+          <div class="muted small" style="margin-top:10px;">
+            Hinweis: <b>Verantwortlichkeit</b> ist gesperrt (Auto-Zuordnung) – genau wie „Formel/Automatik“ in Excel.
           </div>
         </div>
       </section>
