@@ -1,3 +1,4 @@
+// app.js
 /* =========================
    STATE + PROGRESS
 ========================= */
@@ -200,7 +201,6 @@ function renderQuestion() {
   const list = getModuleQuestions(currentModule);
   const q = list[currentIndexWithinModule];
 
-  // Safety fallback
   if (!q) return;
 
   const globalIdx = questions.indexOf(q);
@@ -259,7 +259,6 @@ nextBtn.addEventListener("click", () => {
   if (currentIndexWithinModule < list.length - 1) {
     currentIndexWithinModule++;
   } else {
-    // jump to next module if available
     const order = ["m1","m2","m3","m4","m5"];
     const pos = order.indexOf(currentModule);
     if (pos >= 0 && pos < order.length - 1) {
@@ -304,7 +303,15 @@ challengeBtn?.addEventListener("click", () => {
    RESET
 ========================= */
 resetBtn.addEventListener("click", () => {
-  state = { points:0, currentModule:"m1", currentIndexWithinModule:0, answered:{}, sheetData:null, challengeDone:false };
+  state = {
+    points:0,
+    currentModule:"m1",
+    currentIndexWithinModule:0,
+    answered:{},
+    sheetData:null,
+    challengeDone:false,
+    sheetTasksDone:{}
+  };
   saveState();
   location.reload();
 });
@@ -314,7 +321,7 @@ resetBtn.addEventListener("click", () => {
 ========================= */
 function updateProgress() {
   const points = state.points || 0;
-  const max = questions.reduce((s,q)=> s + q.points, 0) + 2; // +2 Challenge Bonus möglich
+  const max = questions.reduce((s,q)=> s + q.points, 0) + 2 + 4; // quiz + challenge + sheet tasks
 
   document.getElementById("pointsLabel").textContent = `${points} Punkte`;
   const badge = [...badges].reverse().find(b => points >= b.min)?.label ?? "—";
@@ -550,17 +557,117 @@ filterCol.addEventListener("change", renderSheet);
 filterVal.addEventListener("input", renderSheet);
 
 /* =========================
+   AUTO-AUFGABENPRÜFUNG (SHEET)
+========================= */
+const checkTasksBtn = document.getElementById("checkTasksBtn");
+const tasksResult = document.getElementById("tasksResult");
+const tasksPointsInfo = document.getElementById("tasksPointsInfo");
+
+function findRowById(id) {
+  return sheetRows.find(r => Number(r[0]) === Number(id));
+}
+
+function countNonEmptyLastChecks() {
+  // Last Check ist Spalte 9 (0-basiert)
+  return sheetRows.filter(r => String(r[9] ?? "").trim().length > 0).length;
+}
+
+function ensureTasksState() {
+  state.sheetTasksDone = state.sheetTasksDone || {};
+}
+
+function updateTasksInfo() {
+  ensureTasksState();
+  const doneCount = Object.values(state.sheetTasksDone).filter(Boolean).length;
+  if (tasksPointsInfo) tasksPointsInfo.textContent = `Erledigt: ${doneCount}/4 Aufgaben`;
+}
+updateTasksInfo();
+
+checkTasksBtn?.addEventListener("click", () => {
+  ensureTasksState();
+
+  // Aufgabe 1: ID 3 Status Quo = Nicht vorhanden
+  const r3 = findRowById(3);
+  const task1ok = r3 && r3[8] === "Nicht vorhanden";
+
+  // Aufgabe 2: ID 1 Abteilung = Product Management -> Verantwortlichkeit Thomas
+  const r1 = findRowById(1);
+  const task2ok = r1 && r1[1] === "Product Management" && r1[11] === "Thomas";
+
+  // Aufgabe 3: Mindestens 2 Last Check gefüllt
+  const task3ok = countNonEmptyLastChecks() >= 2;
+
+  // Aufgabe 4: ID 6 Zyklus = Quartalsweise
+  const r6 = findRowById(6);
+  const task4ok = r6 && r6[13] === "Quartalsweise";
+
+  const checks = [
+    { key: "t1", ok: task1ok, text: "Aufgabe 1: ID 3 – Status Quo = „Nicht vorhanden“" },
+    { key: "t2", ok: task2ok, text: "Aufgabe 2: ID 1 – Product Management → Verantwortlichkeit „Thomas“" },
+    { key: "t3", ok: task3ok, text: "Aufgabe 3: Mindestens 2× Last Check ausgefüllt" },
+    { key: "t4", ok: task4ok, text: "Aufgabe 4: ID 6 – Zyklus = „Quartalsweise“" },
+  ];
+
+  let gained = 0;
+  let lines = [];
+
+  checks.forEach(c => {
+    const already = !!state.sheetTasksDone[c.key];
+
+    if (c.ok && !already) {
+      state.points = (state.points || 0) + 1;
+      state.sheetTasksDone[c.key] = true;
+      gained += 1;
+    }
+
+    const mark = c.ok ? "✅" : "❌";
+    const note = c.ok
+      ? (already ? " (schon gewertet)" : " (+1 Punkt)")
+      : " (noch offen)";
+    lines.push(`${mark} ${c.text}${note}`);
+  });
+
+  saveState();
+  updateProgress();
+  updateTasksInfo();
+
+  if (tasksResult) {
+    tasksResult.textContent =
+      gained > 0
+        ? `Super! Du hast ${gained} Punkt(e) durch die Aufgabenprüfung bekommen.\n\n${lines.join("\n")}`
+        : `Noch keine neuen Punkte.\n\n${lines.join("\n")}`;
+  }
+});
+
+/* =========================
    PERSISTENCE
 ========================= */
 function loadState() {
   try {
     const raw = localStorage.getItem(STATE_KEY);
-    if (!raw) return { points:0, currentModule:"m1", currentIndexWithinModule:0, answered:{}, sheetData:null, challengeDone:false };
+    if (!raw) return {
+      points:0,
+      currentModule:"m1",
+      currentIndexWithinModule:0,
+      answered:{},
+      sheetData:null,
+      challengeDone:false,
+      sheetTasksDone:{}
+    };
     const s = JSON.parse(raw);
     if (!s.answered) s.answered = {};
+    if (!s.sheetTasksDone) s.sheetTasksDone = {};
     return s;
   } catch {
-    return { points:0, currentModule:"m1", currentIndexWithinModule:0, answered:{}, sheetData:null, challengeDone:false };
+    return {
+      points:0,
+      currentModule:"m1",
+      currentIndexWithinModule:0,
+      answered:{},
+      sheetData:null,
+      challengeDone:false,
+      sheetTasksDone:{}
+    };
   }
 }
 function saveState() {
