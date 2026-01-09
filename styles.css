@@ -1,13 +1,10 @@
 :root{
   --bg:#0b0f19;
   --panel:#0f172a;
-  --panel2:#0b1224;
   --border:rgba(255,255,255,.10);
   --text:#e5e7eb;
   --muted:#9ca3af;
   --acc:#22c55e;
-  --danger:#ef4444;
-  --warn:#f59e0b;
   --shadow: 0 14px 40px rgba(0,0,0,.35);
 }
 
@@ -36,14 +33,6 @@ body{
 }
 
 .brand{ display:flex; gap:12px; align-items:center; }
-.logo{
-  width:36px; height:36px;
-  border-radius:10px;
-  background: var(--acc);
-  color:#052e12;
-  display:grid; place-items:center;
-  font-weight:900;
-}
 .title{ font-weight:800; }
 .subtitle{ font-size:12px; color:var(--muted); margin-top:2px; }
 
@@ -113,12 +102,10 @@ body{
   transition: background .15s ease, border-color .15s ease;
 }
 .navbtn:hover{ background: rgba(255,255,255,.07); }
-
 .navbtn.active{
   border-color: rgba(34,197,94,.55);
   background: rgba(34,197,94,.12);
 }
-
 .navbtn.danger{
   border-color: rgba(239,68,68,.45);
   background: rgba(239,68,68,.06);
@@ -190,6 +177,7 @@ h1{ margin: 8px 0 12px; }
   margin-top: 12px;
   color: var(--muted);
   font-size: 13px;
+  white-space: pre-line;
 }
 
 .bullets{ margin: 0; padding-left: 18px; color: var(--muted); }
@@ -263,31 +251,32 @@ table.excel th{
   top:0;
   z-index:2;
   font-weight:700;
-  background: #e5e7eb; /* Excel-like grey header */
+  background: #e5e7eb;
+  text-align:left;
 }
 
-/* “Yellow” header columns like your screenshot (Status/LastCheck/GAP/Verantw.) */
+/* Yellow header columns like screenshot */
 table.excel th.hl{
-  background: #fde047; /* yellow */
+  background: #fde047;
 }
 
-/* Locked columns like Excel (ID / Verantwortlichkeit) */
+/* Locked columns */
 td.locked{
   background: #f3f4f6 !important;
 }
 
-/* Editable cell focus */
+/* Editable focus */
 td.editable:focus{
   outline: 2px solid rgba(34,197,94,.55);
   background: #ecfdf5 !important;
 }
 
-/* Ampel colors for Status Quo */
+/* Ampel */
 td.cell-ok{ background: #bbf7d0 !important; }
 td.cell-warn{ background: #fef08a !important; }
 td.cell-bad{ background: #fecaca !important; }
 
-/* Zyklus colors */
+/* Zyklus */
 td.cycle-warn{ background: #fef08a !important; }
 td.cycle-bad{ background: #fecaca !important; }
 
@@ -305,6 +294,26 @@ td.cycle-bad{ background: #fecaca !important; }
     border-bottom:1px solid var(--border);
   }
   .navlist{ flex-direction: row; }
-  .navbtn{ min-width: 190px; }
+  .navbtn{ min-width: 220px; }
   select, input{ min-width: 180px; }
+}
+
+/* =========================================================
+   LOGO FIX (GARANTIERT 36x36, egal wie groß die Bilddatei ist)
+   -> Ganz unten, damit nichts es überschreibt
+========================================================= */
+.logo-wrap{
+  width: 36px !important;
+  height: 36px !important;
+  flex: 0 0 36px !important;
+}
+.logo-wrap img,
+.brand-logo{
+  width: 36px !important;
+  height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  object-fit: contain !important;
+  display: block !important;
+  border-radius: 10px;
 }
