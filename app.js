@@ -64,7 +64,7 @@ const questions = [
   },
   {
     module:"m1", title:"Frage 4", points:1, type:"single",
-    question:"Fall: Im Sheet „Compliance & Strafrecht“ siehst du beim Eintrag C&S 007:\n• Last Check = 01/01/2026\n• Gap Analyse: „Lösch- und Sperrkonzept mit Fristen abgleichen“\n• In der Realität wurde das Löschkonzept bereits aktualisiert – steht aber nicht in der Tabelle.\nWas wäre der richtige nächste Schritt?",
+    question:"Fall: Im Sheet „Compliance & Strafrecht“ siehst du beim Eintrag C&S 007: • Last Check = 01/01/2026 • Gap Analyse: „Lösch- und Sperrkonzept mit Fristen abgleichen“ • In der Realität wurde das Löschkonzept bereits aktualisiert – steht aber nicht in der Tabelle. Was wäre der richtige nächste Schritt?",
     options:[
       "Den Eintrag auf „Implementiert“ setzen",
       "„Last Check“ aktualisieren und Gap Analyse ergänzen (z. B. „erledigt / Umsetzung dokumentiert“)",
