@@ -865,4 +865,44 @@ renderSheet();
 
 document.querySelectorAll(".modulebtn").forEach(b => b.classList.remove("active"));
 document.querySelector(`.modulebtn[data-module="${currentModule}"]`)?.classList.add("active");
+/* ===== Navigation ===== */
+const navItems = document.querySelectorAll(".nav-item");
+const views = document.querySelectorAll(".view");
+
+function showView(id){
+  views.forEach(v => v.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+
+  navItems.forEach(b => b.classList.remove("active"));
+  document.querySelector(`[data-view="${id}"]`)?.classList.add("active");
+}
+
+navItems.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const view = btn.dataset.view;
+    if(view) showView(view);
+  });
+});
+
+/* ===== Video abgeschlossen ===== */
+document.getElementById("videoDoneBtn").addEventListener("click", () => {
+  showView("modul1");
+});
+
+/* ===== Reset ===== */
+document.getElementById("resetBtn").addEventListener("click", () => {
+  location.reload();
+});
+
+/* ===== MODULE CONTENT (gekürzt dargestellt – Logik bleibt gleich) ===== */
+document.getElementById("modul1").innerHTML = `
+  <h1>Modul 1 – Grundverständnis</h1>
+  <p>Wofür dient das Rechtskataster primär?</p>
+  <label><input type="radio"> Ablage juristischer Texte</label><br>
+  <label><input type="radio" checked> Strukturierte Übersicht aller Pflichten</label><br>
+  <label><input type="radio"> Aufgabenverteilung</label>
+`;
+
+/* 👉 Hier bleiben deine bestehenden Modul-Logiken & Quizfragen
+   👉 einfach unverändert weiterführen */
 
