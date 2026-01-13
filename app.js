@@ -542,15 +542,15 @@ function updateProgress() {
 const deptToOwner = {
   "Product Management": "Thomas",
   "Customer Success": "Hannes",
-  "Sales / CS / Marketing-Support": "Pia",
+  "Sales / CS / Sales Partner": "Pia",
   "Sales Support": "Pia",
-  "Marketing & Sales Automation": "Lisa",
+  "Marketing & Sales Automation / Agenturen": "Lisa",
   "Finanzen / Controlling": "Birgit",
   "Digital Marketing / Social Media": "Lisa",
   "Outbound-Telefonie": "Pia",
   "Design, Film & Media": "Lisa",
-  "Sales Partner": "Thomas",
-  "Agenturen": "Lisa",
+  "Personal / HR": "Pia",
+  "Geschäftsführung": "Thomas",
 };
 
 const STATUS = ["Implementiert", "In Bearbeitung", "Nicht vorhanden"];
