@@ -1,82 +1,173 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LegalTegrity – E-Learning</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
-<header class="topbar">
-  <div class="brand">
-    <div class="logo-wrap">
-      <img src="legaltegrity-logo.png" class="brand-logo" alt="LegalTegrity">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo-wrap">
+        <img src="legaltegrity-logo.png" class="brand-logo" alt="LegalTegrity" />
+      </div>
+      <div>
+        <div class="title">LegalTegrity</div>
+        <div class="subtitle">E-Learning (Uni-Projekt-Prototyp)</div>
+      </div>
     </div>
-    <div>
-      <div class="title">LegalTegrity</div>
-      <div class="subtitle">E-Learning (Uni-Projekt-Prototyp)</div>
+
+    <div class="progress">
+      <div class="progress-meta">
+        <span id="pointsLabel">0 Punkte</span>
+        <span id="badgeLabel" class="badge">—</span>
+      </div>
+      <div class="progressbar">
+        <div id="progressFill" class="progressfill" style="width:0%"></div>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<div class="layout">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-title">Navigation</div>
-
-    <!-- 🔥 NEU: Schulungsvideo -->
-    <button class="nav-item active" data-view="video">
-      🎬 Schulungsvideo
-    </button>
-
-    <div class="sidebar-divider">Module</div>
-
-    <button class="nav-item" data-view="modul1">Modul 1 – Grundverständnis</button>
-    <button class="nav-item" data-view="modul2">Modul 2 – Struktur</button>
-    <button class="nav-item" data-view="modul3">Modul 3 – Pflege</button>
-    <button class="nav-item" data-view="modul4">Modul 4 – Navigation</button>
-    <button class="nav-item" data-view="modul5">Modul 5 – Governance</button>
-
-    <button class="nav-item danger" id="resetBtn">Reset</button>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="content">
-
-    <!-- 🎬 VIDEO VIEW -->
-    <section class="view active" id="video">
-      <h1>🎬 Einführungsvideo – Rechtskataster</h1>
-      <p>
-        Bitte sieh dir zuerst das Schulungsvideo vollständig an.  
-        Danach kannst du mit den Modulen und Quizfragen starten.
-      </p>
-
-      <div class="video-box">
-        <!-- Platzhalter – du kannst hier YouTube, Vimeo oder MP4 einbinden -->
-        <iframe
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-          title="Schulungsvideo"
-          frameborder="0"
-          allowfullscreen>
-        </iframe>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="side-title">Module</div>
+      <div class="navlist">
+        <button class="navbtn modulebtn active" data-module="m1">Modul 1: Grundverständnis</button>
+        <button class="navbtn modulebtn" data-module="m2">Modul 2: Struktur & Interpretation</button>
+        <button class="navbtn modulebtn" data-module="m3">Modul 3: Pflege & Aktualisierung</button>
+        <button class="navbtn modulebtn" data-module="m4">Modul 4: Navigation & Nutzung</button>
+        <button class="navbtn modulebtn" data-module="m5">Modul 5: Governance & Rollen</button>
+        <button class="navbtn modulebtn" data-module="challenge">Challenge</button>
       </div>
 
-      <button class="primary" id="videoDoneBtn">
-        ✔ Video gesehen – zu den Modulen
-      </button>
-    </section>
+      <div class="side-title">Fragen im Modul</div>
+      <div id="questionNav" class="navlist"></div>
 
-    <!-- MODULE -->
-    <section class="view" id="modul1"></section>
-    <section class="view" id="modul2"></section>
-    <section class="view" id="modul3"></section>
-    <section class="view" id="modul4"></section>
-    <section class="view" id="modul5"></section>
+      <div class="side-title">Praxis</div>
+      <button class="navbtn" id="navSheet">Übungs-Sheet</button>
 
-  </main>
-</div>
+      <button class="navbtn danger" id="resetBtn">Reset</button>
+    </aside>
 
-<script src="app.js"></script>
+    <main class="content">
+      <!-- QUIZ VIEW -->
+      <section class="view active" id="view-quiz">
+        <h1 id="moduleTitle">Modul 1 – Grundverständnis</h1>
+        <p class="muted" id="moduleDesc"></p>
+
+        <div class="card">
+          <div class="qhead">
+            <div class="qtitle" id="qTitle">Frage</div>
+            <div class="qmeta muted" id="qMeta">Wähle die richtige(n) Antwort(en).</div>
+          </div>
+
+          <h2 id="qQuestion">…</h2>
+
+          <div class="quiz" id="qOptions"></div>
+
+          <div class="quiz-actions">
+            <button class="btn" id="checkBtn">Antwort prüfen</button>
+            <button class="btn ghost" id="nextBtn">Nächste Frage</button>
+          </div>
+
+          <div class="quiz-result" id="qResult"></div>
+        </div>
+
+        <div class="card">
+          <h2>Wichtige Regeln aus dem Rechtskataster</h2>
+          <ul class="bullets">
+            <li><b>Abteilung</b> (Dropdown) → <b>Verantwortlichkeit</b> wird automatisch gesetzt (nicht editierbar).</li>
+            <li><b>Status Quo</b> (Dropdown) mit Ampellogik: <b>Implementiert (grün)</b>, <b>In Bearbeitung (gelb)</b>, <b>Nicht vorhanden (rot)</b>.</li>
+            <li><b>Last Check</b>: aktuelles Datum unter Windows per <b>Strg + Punkt</b>.</li>
+            <li><b>Zyklus</b> (Dropdown): Jährlich/Halbjährlich neutral, <b>Quartalsweise gelb</b>, <b>Monatlich rot</b>.</li>
+            <li><b>ID</b> ist fortlaufend für eindeutige Referenzen (z.B. E-Mail, Filter).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- CHALLENGE VIEW -->
+      <section class="view" id="view-challenge">
+        <h1>Challenge – Audit Ready</h1>
+        <p class="muted">
+          Ziel: In kurzer Zeit kritische Stellen identifizieren und Pflege-Standards anwenden.
+        </p>
+
+        <div class="card">
+          <h2>Aufgaben</h2>
+          <ol class="bullets">
+            <li>Öffne das <b>Übungs-Sheet</b>.</li>
+            <li>Setze in 2 Zeilen den <b>Status Quo</b> auf <b>„Nicht vorhanden“</b> und prüfe, ob die Zellen rot werden.</li>
+            <li>Wähle in einer Zeile <b>„Product Management“</b> und prüfe, ob <b>Thomas</b> automatisch bei Verantwortlichkeit steht.</li>
+            <li>Trage in 2 Zeilen ein Datum in <b>Last Check</b> ein (z.B. via <b>Strg + Punkt</b>).</li>
+          </ol>
+
+          <button class="btn" id="challengeCompleteBtn">Challenge als erledigt markieren</button>
+          <div class="quiz-result" id="challengeResult"></div>
+        </div>
+      </section>
+
+      <!-- SHEET VIEW -->
+      <section class="view" id="view-sheet">
+        <h1>Übungs-Sheet (Excel-Look)</h1>
+        <p class="muted">
+          Diese Tabelle simuliert den Aufbau des Rechtskatasters (Excel-Optik) inkl. Dropdowns, Ampelfarben
+          und automatischer Verantwortlichkeit.
+        </p>
+
+        <div class="sheet-card">
+
+          <!-- ✅ Auto-Check Aufgabenblock -->
+          <div class="card">
+            <h2>Übungsaufgaben (Auto-Prüfung)</h2>
+            <p class="muted small">
+              Erledige die Aufgaben in der Tabelle und klicke dann auf <b>„Aufgaben prüfen“</b>.
+              Jede Aufgabe gibt nur <b>einmal</b> Punkte.
+            </p>
+
+            <ol class="bullets" style="margin-top:10px;">
+              <li><b>Zeile/ID 3:</b> Setze <b>Status Quo</b> auf <b>„Nicht vorhanden“</b> (Zelle muss rot werden).</li>
+              <li><b>Zeile/ID 1:</b> Wähle Abteilung <b>„Product Management“</b> → Verantwortlichkeit muss automatisch <b>Thomas</b> sein.</li>
+              <li><b>Last Check:</b> Trage bei <b>mindestens 2 Einträgen</b> ein Datum ein (z.B. Windows: <b>Strg + Punkt</b>).</li>
+              <li><b>Zeile/ID 6:</b> Setze <b>Zyklus</b> auf <b>„Quartalsweise“</b> (Zelle wird gelb).</li>
+            </ol>
+
+            <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+              <button class="btn" id="checkTasksBtn">Aufgaben prüfen</button>
+              <div class="muted small" id="tasksPointsInfo"></div>
+            </div>
+
+            <div class="quiz-result" id="tasksResult"></div>
+          </div>
+          <!-- ✅ Ende Aufgabenblock -->
+
+          <div class="sheet-toolbar">
+            <div class="tool">
+              <div class="tool-label">Filter (Spalte)</div>
+              <select id="filterCol"></select>
+            </div>
+            <div class="tool">
+              <div class="tool-label">Filter (enthält)</div>
+              <input id="filterVal" type="text" placeholder="z.B. Implementiert, DSGVO, Quartalsweise…" />
+            </div>
+            <div class="tool">
+              <div class="tool-label">Zurück</div>
+              <button class="btn" id="backToQuizBtn">Zum Quiz</button>
+            </div>
+          </div>
+
+          <div class="tablewrap light">
+            <table id="sheetTable" class="excel"></table>
+          </div>
+
+          <div class="muted small" style="margin-top:10px;">
+            Hinweis: <b>Verantwortlichkeit</b> ist gesperrt (Auto-Zuordnung) – wie „Formel/Automatik“ in Excel.
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
